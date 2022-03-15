@@ -1,5 +1,6 @@
 # custom
 .DS_Store
+data/GIS/
 
 # History files
 .Rhistory
