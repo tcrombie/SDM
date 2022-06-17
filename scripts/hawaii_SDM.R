@@ -134,6 +134,9 @@ stats_df <- sf_df_env_ex %>%
   sf::st_drop_geometry(.) %>% # remove the geometry
   tidyr::drop_na(.) # drop rows with NAs
 
+# output the stats_df file
+save(stats_df, file = "data/stats_df.Rdata")
+
 # make a pairwise correlation plot with ecospat package
 ecospat::ecospat.cor.plot(stats_df %>% dplyr::select(5:10))
 
