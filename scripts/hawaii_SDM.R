@@ -151,14 +151,9 @@ anova(glm1)
 stats::AIC(glm1)
 
 # add quadratic terms, want a 
-glm2 <- glm(ce ~  poly(elevation_m, 2) + lai_ann + rain_mm_ann,
-            data = stats_df, family = "binomial")
+glm2 <- glm(ce ~  poly(elevation_m, 2) + lai_ann + rain_mm_ann, data = stats_df, family = "binomial")
 anova(glm2)
 stats::AIC(glm2)
-
-glm_small <- glm(ce ~ 1 + poly(elevation_m, 2),
-                 data = stats_df, family = "binomial")
-stats::AIC(glm_small)
 
 #=========================================================#
 # compare models with VIF pruned env vars
@@ -172,22 +167,48 @@ stats::AIC(glmModAIC)
 # select best model and predict for every cell in raster grid
 
 # plot the response curves
-rp <- biomod2::response.plot2(models = c("glm1", "glm2", "glmModAIC"), 
+rp_all <- biomod2::response.plot2(models = c("glm1", "glm2", "glmModAIC"), 
                      Data = as.data.frame(stats_df %>% dplyr::select(lai_ann, rain_mm_ann, elevation_m)),
                      show.variables = c("lai_ann", "rain_mm_ann", "elevation_m"),
                      fixed.var.metric = "mean",
                      plot = FALSE,
                      use.formal.names = TRUE)
+rp_1 <- biomod2::response.plot2(models = c("glm1"), 
+                                  Data = as.data.frame(stats_df %>% dplyr::select(lai_ann, rain_mm_ann, elevation_m)),
+                                  show.variables = c("lai_ann", "rain_mm_ann", "elevation_m"),
+                                  fixed.var.metric = "mean",
+                                  plot = FALSE,
+                                  use.formal.names = TRUE)
+rp_12 <- biomod2::response.plot2(models = c("glm1", "glm2"), 
+                                  Data = as.data.frame(stats_df %>% dplyr::select(lai_ann, rain_mm_ann, elevation_m)),
+                                  show.variables = c("lai_ann", "rain_mm_ann", "elevation_m"),
+                                  fixed.var.metric = "mean",
+                                  plot = FALSE,
+                                  use.formal.names = TRUE)
 
-gg.rp <- ggplot2::ggplot(rp, aes(x = expl.val, y = pred.val, lty = pred.name)) +
+
+gg.rp_all <- ggplot2::ggplot(rp_all, aes(x = expl.val, y = pred.val, lty = pred.name)) +
   geom_line() +
-  labs(y = "prob of occurance", x = "", lty = "") +
+  labs(y = "prob of occurrence", x = "", lty = "") +
   theme_bw() +
   facet_grid(~expl.name, scales = "free_x")
-gg.rp
+gg.rp_all
+gg.rp_1 <- ggplot2::ggplot(rp_1, aes(x = expl.val, y = pred.val, lty = pred.name)) +
+  geom_line() +
+  labs(y = "prob of occurrence", x = "", lty = "") +
+  theme_bw() +
+  facet_grid(~expl.name, scales = "free_x")
+gg.rp_1
+gg.rp_12 <- ggplot2::ggplot(rp_12, aes(x = expl.val, y = pred.val, lty = pred.name)) +
+  geom_line() +
+  labs(y = "prob of occurrence", x = "", lty = "") +
+  theme_bw() +
+  facet_grid(~expl.name, scales = "free_x")
+gg.rp_12
 
-cowplot::ggsave2(gg.rp, filename = "plots/model_response_cruves.pdf", width = 7.5, height = 5)
-
+cowplot::ggsave2(gg.rp_1, filename = "plots/glm1_model_response_cruves.pdf", width = 7.5, height = 5)
+cowplot::ggsave2(gg.rp_12, filename = "plots/glm2_model_response_cruves.pdf", width = 7.5, height = 5)
+cowplot::ggsave2(gg.rp_all, filename = "plots/glmall_model_response_cruves.pdf", width = 7.5, height = 5)
 
 # make a raster layer with new values
 r0 <- raster::predict(env_rs, model = glm1, progress='text', type = "response")
@@ -319,7 +340,7 @@ stats::AIC(glmModAIC)
 # 
 # 
 # #================================================#
-# # downsampling occurance data with gridsample
+# # downsampling occurrence data with gridsample
 # #================================================#
 # # I have cells with a huge number of samples. These should be downsampled to avoid bias.
 # 
