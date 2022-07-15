@@ -1,6 +1,8 @@
+.libPaths("/opt/homebrew/lib/R/4.1/site-library")
 library(tidyverse)
 library(ggfortify)
 library(logisticPCA)
+library(logistf)
 
 # set working directory
 setwd(glue::glue("{dirname(rstudioapi::getActiveDocumentContext()$path)}/.."))
@@ -11,9 +13,23 @@ load("data/stats_df.Rdata")
 #get just the environmental variables 
 env_var <- stats_df[,c(5:12)]
 
-#get the components 
+#run PCA and plot PC1 and PC2
 pca_env <- prcomp(env_var,scale=TRUE)
 autoplot(pca_env)
+
+#collect the PCs 
+
+pc1 <- pca_env$x[,1]
+pc2 <- pca_env$x[,2]
+pc3 <- pca_env$x[,3]
+
+stats_df$pc1 <-pc1
+stats_df$pc2 <-pc2
+stats_df$pc3 <- pc3
+
+#save new dataframe as csv 
+
+write.csv(stats_df,"./data/PCA_stats_df.csv", row.names = FALSE)
 
 # use classifier
 
@@ -29,15 +45,13 @@ neg_find <- 1-pos_find
 
 #this means that we would need the accruacy to be > 95.3 for this to mean anything. 
 
-library(logistf)
+#fm=ce ~ tair_ann+soil_moist_ann+tsurf_ann+lai_ann+rain_mm_ann+elevation_m+lon+lat
+fm <- ce ~ pc1 + pc2 + pc3 
+fit1 <- logistf(data=stats_df,fm,firth=TRUE,pl=FALSE)
 
-
-fm=ce ~ tair_ann+soil_moist_ann+tsurf_ann+lai_ann+rain_mm_ann+elevation_m+lon+lat
-#fit1 <- logistf(data=stats_df,fm,firth=TRUE,pl=FALSE)
-fit1 <- logisticPCA(data=stats_df,fm,firth=TRUE,pl=FALSE)
 summary(fit1)
-output<-fit1$predict
-stats_df$pred_fm <- output > 0.5
+output<-fit1$predict #the problem is... max(output ~ 0.2)
+stats_df$pred_fm <- output > 0.1
 stats_df$pred_fm <- as.integer(as.logical(stats_df$pred_fm))
 stats_df$comp <- stats_df$ce + stats_df$pred_fm
 mis_class<-length(which(stats_df$comp == 1))/nrow(stats_df)
