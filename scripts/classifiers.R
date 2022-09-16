@@ -29,7 +29,7 @@ stats_df$pc3 <- pc3
 
 #save new dataframe as csv 
 
-write.csv(stats_df,"./data/PCA_stats_df.csv", row.names = FALSE)
+#write.csv(stats_df,"./data/PCA_stats_df.csv", row.names = FALSE)
 
 # use classifier
 
@@ -46,13 +46,18 @@ neg_find <- 1-pos_find
 #this means that we would need the accruacy to be > 95.3 for this to mean anything. 
 
 #fm=ce ~ tair_ann+soil_moist_ann+tsurf_ann+lai_ann+rain_mm_ann+elevation_m+lon+lat
-fm <- ce ~ pc1 + pc2 + pc3 
-fit1 <- logistf(data=stats_df,fm,firth=TRUE,pl=FALSE)
+fm <- ce ~ pc1 + pc2 + pc3
+fit1 <- logistf(data=stats_df,fm,firth=TRUE)
+#fit1 <- glm(fm,data=stats_df,family = 'binomial')
 
 summary(fit1)
 output<-fit1$predict #the problem is... max(output ~ 0.2)
+stats_df$output <- output
 stats_df$pred_fm <- output > 0.1
 stats_df$pred_fm <- as.integer(as.logical(stats_df$pred_fm))
 stats_df$comp <- stats_df$ce + stats_df$pred_fm
 mis_class<-length(which(stats_df$comp == 1))/nrow(stats_df)
 accuracy <- 1-mis_class
+
+#write.csv(stats_df,"./data/lr_pca_stats_df.csv", row.names = FALSE)
+
