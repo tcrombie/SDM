@@ -78,14 +78,32 @@ raster::plot(env_rs[[1:6]], col=rainbow(100,start=.0,end=.8))
 # load sampling data
 load(file = "data/hawaii_sampling/2021-11-11_2021JuneHawaiifulcrum.rds")
 sd_1 <- data_out %>%
-  dplyr::select(project:strain_name, lat = collection_latitude, long = collection_longitude)
+  dplyr::select(project:strain_name, lat = collection_latitude, long = collection_longitude,
+                ambient_humidity,
+                substrate,
+                ambient_temp = proc_ambient_temperature,
+                substrate_temp = proc_substrate_temperature,
+                collection_time = collection_local_time,
+                collection_date = collection_date_UTC)
 rm(data_out)
 
 sd_2 <- readRDS(file = "data/hawaii_sampling/2021-11-12_2021OctoberHawaii_fulcrum.rds") %>%
-  dplyr::select(project:strain_name, lat = collection_latitude, long = collection_longitude)
+  dplyr::select(project:strain_name, lat = collection_latitude, long = collection_longitude,
+                ambient_humidity,
+                substrate,
+                ambient_temp = proc_ambient_temperature,
+                substrate_temp = proc_substrate_temperature,
+                collection_time = collection_local_time,
+                collection_date = collection_date_UTC)
 
 sd_3 <- data.table::fread("data/hawaii_sampling/MolEcol_data.csv") %>%
-  dplyr::select(project:strain_name, -isotype, lat = collection_latitude, long = collection_longitude)
+  dplyr::select(project:strain_name, -isotype, lat = collection_latitude, long = collection_longitude,
+                ambient_humidity,
+                substrate,
+                ambient_temp = ambient_temperature,
+                substrate_temp = substrate_temperature,
+                collection_time = collection_local_time,
+                collection_date = collection_date_UTC)
 
 # bind the sampling data
 sd <- rbind(sd_1, sd_2, sd_3) %>%
@@ -116,7 +134,7 @@ sf_df_env_ex <- sd_sf %>%
   dplyr::bind_cols(as.data.frame(raster::extract(env_rs, sd_sf)))
 
 # export this
-#save(sf_df_env_ex, file = "data/2022-03-15_collection_env_var.rda")
+#save(sf_df_env_ex, file = "data/2022-09-24_collection_env_var.rda")
 
 #======================================================#
 # assess pariwise corelations and multicollinearity
@@ -132,18 +150,29 @@ stats_df <- sf_df_env_ex %>%
   dplyr::mutate(lon = sf::st_coordinates(.)[,1],
                 lat = sf::st_coordinates(.)[,2]) %>% # extract the lon and lat from geometry
   sf::st_drop_geometry(.) %>% # remove the geometry
-  tidyr::drop_na(.) # drop rows with NAs
+  tidyr::drop_na(.) %>% # drop rows with NAs
+  dplyr::select(project,
+                c_label,
+                id,
+                ce,
+                substrate,
+                ambient_humidity,
+                ambient_temp,
+                substrate_temp,
+                collection_time,
+                collection_date,
+                everything())
 
 # output the stats_df file
 save(stats_df, file = "data/stats_df.Rdata")
 
 # make a pairwise correlation plot with ecospat package
-ecospat::ecospat.cor.plot(stats_df %>% dplyr::select(5:10))
+ecospat::ecospat.cor.plot(stats_df %>% dplyr::select(10:15))
 
 # need to convert stats_df to dataframe from tibble. WOW! need to drop temp variables, keep elevation, lai, and rainfall
-vif1 <- usdm::vif(as.data.frame(stats_df %>% dplyr::select(5:10)))
+vif1 <- usdm::vif(as.data.frame(stats_df %>% dplyr::select(10:15)))
 vif2 <- usdm::vif(as.data.frame(stats_df %>% dplyr::select(lai_ann, rain_mm_ann, elevation_m)))
-usdm::vifcor(as.data.frame(stats_df %>% dplyr::select(5:10)), th = 0.7) 
+usdm::vifcor(as.data.frame(stats_df %>% dplyr::select(10:15)), th = 0.7) 
 
 # other variables could be included in this analysis, just working with GIS data for now.
 #======================================================#
