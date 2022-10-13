@@ -1,0 +1,45 @@
+folder,variable_name,description,category,extent,source
+AET_mm_month_raster,,Actual Evapotranspiration,Evaporation,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+AET_wm2_month_raster,,Latent Heat Flux,Evaporation,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+AirDensity_month_raster,,Air Density,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+albedo_month_raster,,Albedo,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+AvailableEnergy_month_raster,,Available Energy,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+CAH_HabStatus,,Carbon Assessment of Hawaii Land Cover Map,land cover,,https://www.sciencebase.gov/catalog/item/592dee56e4b092b266efeb6b
+CAH_LandCover,,Carbon Assessment of Hawaii Land Cover Map,land cover,,https://www.sciencebase.gov/catalog/item/592dee56e4b092b266efeb6b
+CanopyConductance_month_raster,,Canopy Conductance,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+cb_2018_us_state_500k,,Hawaii Shape Files,map,,https://www.census.gov/geographies/mapping-files/2018/geo/carto-boundary-file.html
+ClearSky_TerrainShading_month_raster,,Clear Sky Radiation with Terrain Shading,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+CloudFreq_month_raster,,Cloud Frequency,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+CloudySWGlobTerrain_month_raster,,Solar Radiation,Radiation,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+DiffuseRadiation_month_raster,,Diffuse Radiation,Radiation,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+EVI_month_raster,,Enhanced Vegetation Index (EVI),other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+FractionalCanopyWetness_month_raster,,Canopy Wetness Fraction,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+FractionalVegetationCover_month_raster,,Vegetation Cover Fraction,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+grass_reference_ET0_mm_month_raster,,Grass Reference Surface Potential Evapotranspiration,Evaporation,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+LAI_month_raster,,Leaf Area Index,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+LWDown_month_raster,,Downward Longwave Radiation,Radiation,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+LWUp_month_raster,,Upward Longwave Radiation,Radiation,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+NDVI_month_raster,,Normalized Difference Vegetation Index (NDVI),other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+Penman_ET0_mm_month_raster,,Penman-Monteith Potential Evapotranspiration,Evaporation,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+Priestley_ET0_mm_month_raster,,Priestley-Taylor Potential Evapotranspiration ,Evaporation,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+QA_month_raster,,Air Layer Heat Storage,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+QB_month_raster,,Biomass Heat Storage,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+RH_month_raster,,Relative Humidity,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+RNet_month_raster,,Net Radiation,Radiation,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+RoughnessLength_month_raster,,Roughness Length,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+soil_evaporation_mm_month_raster,,Soil Evaporation,Evaporation,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+SoilHeat_month_raster,,Soil Heat Flux,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+SoilMoisture_month_raster,,Available Soil Moisture,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+srtm_05_08,,elevations,elevation,,Shuttle Radar Topography Mission
+srtm_05_09,,elevations,elevation,,Shuttle Radar Topography Mission
+srtm_06_09,,elevations,elevation,,Shuttle Radar Topography Mission
+StateRFGrids_mm,,rainfall Annual mm,other climate,,http://rainfall.geography.hawaii.edu/downloads.html
+SWClearSky_month_raster,,Clear Sky Radiation,Radiation,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+Tair_month_raster,,Air Temperature Mean,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+Tmax_month_raster,,Air Temperature Max,other climate,evap2,http://evapotranspiration.geography.hawaii.edu/downloads.html
+Tmin_month_raster,,Air Temperature Min,other climate,evap2,http://evapotranspiration.geography.hawaii.edu/downloads.html
+Transpiration_mm_month_raster,,Transpiration,Evaporation,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+TSurf_month_raster,,Surface Temperature,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+VegetationHeight_month_raster,,Vegetation Height,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+VPD_month_raster,,Vapor Pressure Deficit,other climate,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
+wet_canopy_evaporation_mm_month_raster,,Wet Canopy Evaporation,Evaporation,evap,http://evapotranspiration.geography.hawaii.edu/downloads.html
