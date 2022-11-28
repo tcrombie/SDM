@@ -101,14 +101,14 @@ time_matched_df <- merge_df %>%
   tidyr::pivot_longer(cols = value_2_month_prev:value_avg_around_col_month) %>%
   dplyr::mutate(name = stringr::str_replace(name, pattern = "value", replacement = ""),
                 name = paste0(env_name,name)) %>%
-  dplyr::select(-env_name, -lon:-col_month_next1, -land_cover, -habitat_status) %>%
+  dplyr::select(-env_name, -col_month:-col_month_next1, -land_cover, -habitat_status) %>%
   tidyr::pivot_wider(names_from = name, values_from = value) %>%
-  dplyr::arrange(collection_date, collection_time)
+  dplyr::arrange(collection_date, collection_time) %>%
+  dplyr::select(project, c_label, id, n, c, ce, lat, lon, everything())
   
 # observe it
 #options(scipen=999)
 #glimpse(time_matched_df)
 
 # save it
-save(time_matched_df, file = "data/20221028_time_matched_df.Rda")
-
+save(time_matched_df, file = "data/20221128_time_matched_df.Rda")
